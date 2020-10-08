@@ -12,7 +12,8 @@
 
 ## 用法
 
-启动服务
+**启动服务**
+
 `git clone https://github.com/LiZhaji/auto_submit.git`
 
 `cd node`
@@ -25,7 +26,7 @@
 
 `node index.js`
 
-启动页面
+**启动页面**
 
 `cd ../front_end`
 
