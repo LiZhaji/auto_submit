@@ -14,14 +14,19 @@
 
 启动服务
 `git clone https://github.com/LiZhaji/auto_submit.git`
+
 `cd node`
+
 `npm i`
 
 进入`submit.js line15` 替换为本地博客目录
+
 进入`yun.sh line4、5` 替换为你的服务器ip和用户名
 
 `node index.js`
 
 启动页面
+
 `cd ../front_end`
+
 `serve .`
