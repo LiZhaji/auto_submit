@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Markdown Editor</title>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/marked@0.3.6"></script>
+    <script src="https://unpkg.com/lodash@4.16.0"></script>
+    <link rel="stylesheet" type="text/css" href="./index.css" />
+  </head>
+  <body>
+    <div id="editor">
+      <input type="text" v-model="title" placeholder="请输入文章标题" />
+      <textarea :value="input" @input="update"></textarea>
+      <div v-html="compiledMarkdown"></div>
+      <button class="submit" @click="submit">发布</button>
+    </div>
+
+    <script>
+      new Vue({
+        el: "#editor",
+        data: {
+          input: "",
+          title: "",
+        },
+        computed: {
+          compiledMarkdown: function () {
+            return marked(this.input, { sanitize: true });
+          },
+        },
+        methods: {
+          update: _.debounce(function (e) {
+            this.input = e.target.value;
+          }, 300),
+          submit() {
+            console.log(2333);
+            if (!this.title || !this.input) {
+              alert("文章标题或内容不可为空");
+              return;
+            }
+            const xhr = new XMLHttpRequest();
+            xhr.open("post", "http://127.0.0.1:8888", true);
+            xhr.setRequestHeader("Content-Type", "text/plain; charset=utf8");
+
+            const data = {
+              title: this.title,
+              content: this.input,
+            };
+            xhr.send(JSON.stringify(data));
+            console.log(data);
+            xhr.onreadystatechange = () => {
+              if (xhr.readyState === 4 && xhr.status === 200) {
+                alert('上传成功!')
+              }
+            };
+          },
+        },
+      });
+    </script>
+
+  </body>
+</html>
